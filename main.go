@@ -8,6 +8,5 @@ import (
 func main() {
 
 	geral.Geral()
-	fmt.Println("olá")
-	fmt.Println("olá 2")
+
 }
