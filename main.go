@@ -1,11 +1,15 @@
 package main
 
 import (
-	"curso3/geral"
+	"curso3/database"
+	"curso3/routes"
+	"fmt" 
 )
 
 func main() {
 
-	geral.Geral()
+	database.ConectaDB()
+	fmt.Println("Iniciando o Server")
+	routes.HandleRequest()
 
 }
