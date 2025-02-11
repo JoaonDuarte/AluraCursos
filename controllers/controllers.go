@@ -60,11 +60,6 @@ func Criar(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// vars := mux.Vars(r)
-	// nome := vars["nome"]
-	// historia := vars["historia"]
-	// var personalidade models.Personalidade
-	// json.NewDecoder(r.Body).Decode(&personalidade)
 
 	_, err = database.DB.Exec("insert into personalidades (nome, historia) values ($1, $2)", data.Nome, data.Historia)
 	if err != nil {
