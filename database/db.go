@@ -14,7 +14,7 @@ var (
 )
 
 func ConectaDB() {
-	stringDeConexao := "host=localhost user=dicomvix password=system98 dbname=personalidades port=5432 sslmode=disable"
+	stringDeConexao := "host=localhost user=dicomvix password=system98 dbname=clinux_ris_old_old port=8081 sslmode=disable"
 	DB, err = sql.Open("postgres", stringDeConexao)
 	if err != nil {
 		log.Panic("Erro ao conectar ao banco de dados.")

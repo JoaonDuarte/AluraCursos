@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"strings"
 
 	"github.com/gorilla/mux"
 )
@@ -16,7 +17,7 @@ func Home(w http.ResponseWriter, r *http.Request) {
 }
 
 func TodasPersonalidades(w http.ResponseWriter, r *http.Request) {
-	
+
 	var ps []models.Personalidade
 	rows, err := database.DB.Query("select id, nome, historia from personalidades")
 	if err != nil {
@@ -35,7 +36,7 @@ func TodasPersonalidades(w http.ResponseWriter, r *http.Request) {
 }
 
 func RetornaPersonalidade(w http.ResponseWriter, r *http.Request) {
-	
+
 	vars := mux.Vars(r)
 	id := vars["id"]
 
@@ -46,8 +47,10 @@ func RetornaPersonalidade(w http.ResponseWriter, r *http.Request) {
 	err := row.Scan(&p.Id, &p.Nome, &p.Historia)
 	if err != nil {
 		log.Panic()
+
 	}
 	json.NewEncoder(w).Encode(p)
+
 }
 
 func Criar(w http.ResponseWriter, r *http.Request) {
@@ -60,10 +63,12 @@ func Criar(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	data.Historia = strings.ReplaceAll(data.Historia, "–", "-")
 
 	_, err = database.DB.Exec("insert into personalidades (nome, historia) values ($1, $2)", data.Nome, data.Historia)
 	if err != nil {
-		http.Error(w, "Erro ao inserir a personalidade", http.StatusBadRequest)
+		http.Error(w, "Erro ao inserir a personalidade:", http.StatusBadRequest)
+		fmt.Println(err)
 		return
 	}
 	fmt.Fprintf(w, `{"status":"Sucesso","mensagem": "inserido com sucesso"}`)

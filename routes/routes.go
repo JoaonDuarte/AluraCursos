@@ -3,6 +3,7 @@ package routes
 import (
 	"curso3/controllers"
 	middleware "curso3/middlewares"
+	"fmt"
 	"log"
 	"net/http"
 
@@ -18,6 +19,7 @@ func HandleRequest() {
 	r.HandleFunc("/api/personalidades", controllers.Criar).Methods("Post")
 	r.HandleFunc("/api/personalidades", controllers.Deletar).Methods("Delete")
 	r.HandleFunc("/api/personalidades/{id}", controllers.Editar).Methods("Put")
+	fmt.Println("Iniciando o Server")
 	log.Fatal(http.ListenAndServe(":8001", r))
 
 }
